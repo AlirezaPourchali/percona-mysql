@@ -2,15 +2,18 @@
 
 # install percona Server for MySQL
 # interactie shell at the end to give your password
-
-wget https://downloads.percona.com/downloads/Percona-Server-8.0/Percona-Server-8.0.31-23/binary/debian/buster/x86_64/Percona-Server-8.0.31-23-r71449379-buster-x86_64-bundle.tar
-tar xvf Percona-Server-8.0.31-23-r71449379-buster-x86_64-bundle.tar
-sudo dpkg -i *.deb
+cp /etc/resolve.conf /etc/resolve.conf.bak
+echo "nameserver 178.22.122.100" > /etc/resolve.conf
+curl -O https://repo.percona.com/apt/percona-release_latest.generic_all.deb
+sudo apt install gnupg2 lsb-release ./percona-release_latest.generic_all.deb
+sudo apt update
+sudo percona-release setup ps80
+sudo apt install percona-server-server -y 
 
 # install percona Xtrabackup 
-
-wget https://downloads.percona.com/downloads/Percona-XtraBackup-LATEST/Percona-XtraBackup-8.0.26-18/binary/debian/focal/x86_64/percona-xtrabackup-80_8.0.26-18-1.focal_amd64.deb
-sudo dpkg -i percona-xtrabackup-80_8.0.26-18-1.focal_amd64.deb
+#wget https://repo.percona.com/apt/percona-release_latest.$(lsb_release -sc)_all.deb
+sudo apt install percona-xtrabackup-80 -y
+#sudo dpkg -i percona-xtrabackup-80_8.0.26-18-1.focal_amd64.deb
 
 sudo apt install zstd lz4 -y 
 
